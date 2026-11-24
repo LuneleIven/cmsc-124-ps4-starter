@@ -31,36 +31,28 @@ nothing and the search ends after one answer.
 ```
 
 ## P01
-
-Write one to three sentences here. Name the rule that fixes each field.
+The parent facts are tried top to bottom. parent(tom, liz) is the first with tom first, so X=liz. The first ; moves to parent(tom, bob). No other fact starts with tom, so the count is 2.
 
 ## P02
-
-Write one to three sentences here. Name the rule that fixes each field.
+The query is ground, so it has no bindings. parent(tom, bob) matches a fact and the answer is true. No second fact matches, so second is none and the count is 1.
 
 ## P03
-
-Write one to three sentences here. Name the rule that fixes each field.
+No parent fact has tom as its second argument, because tom has no parent in the base. Unification fails on every fact, so the answer is false with 0 answers.
 
 ## P04
-
-Write one to three sentences here. Name the rule that fixes each field.
+= is unification. It doesn't compute anything. X is bound to the term f(Y, a), and Y = b then fills in Y, so X prints as f(b,a). Bindings print in query order, X then Y. There is no choice point, so the count is 1.
 
 ## P05
-
-Write one to three sentences here. Name the rule that fixes each field.
+Unifying f(X, b) with f(a, Y) matches arguments position by position, binding X to a and Y to b. There is exactly one way to unify, so the count is 1.
 
 ## P06
-
-Write one to three sentences here. Name the rule that fixes each field.
+Two different atoms never unify, and no binding can change that. The answer is false with 0 answers.
 
 ## P07
-
-Write one to three sentences here. Name the rule that fixes each field.
+P binds to liz first, and parent(liz, X) fails, so the search backtracks and P becomes bob. parent(bob, X) then gives ann, and the first ; gives pat. No other child of tom has children, so the count is 2.
 
 ## P08
-
-Write one to three sentences here. Name the rule that fixes each field.
+The base clause comes first, so tom's own children liz and bob come out before the recursive clause runs. Then the recursion goes through bob, giving ann, pat, sue and jim. That makes 6 answers, starting with liz and then bob.
 
 ## P09
 
