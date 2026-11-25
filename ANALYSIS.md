@@ -1,11 +1,9 @@
 # The Search and the Stack
 
-Replace this paragraph after your checks pass. Paste the output of `./trace`
-for one case. Then answer three questions about it.
+## Clause order in reach and ancestor
 
-- Which of its lines push a frame onto Activity 15's runtime stack? Which
-  lines pop one?
-- What does a `Redo` line resume that a returned frame cannot?
-- Why does swapping the two clauses of `reach/2` change whether the search
-  ever answers, while swapping the two clauses of `ancestor/2` only changes
-  the order of the answers?
+`ancestor` and `reach` differ in where the recursive call sits relative to the goal that makes progress. In `ancestor`, both clauses read a `parent` fact before calling `ancestor` recursively. The base clause reads one parent edge; the recursive clause reads one parent edge and then asks the smaller question. Prolog can therefore reach a fact and return an answer before it considers another recursive call. Swapping the clauses changes only the order of enumeration: recursive-first yields deep descendants before shallow ones, but both orders eventually produce the same finite answers because every recursive call consumes a parent edge in a finite, acyclic family tree.
+
+`reach` is left-recursive. Its recursive clause is `reach(X, Y) :- reach(X, Z), edge(Z, Y)`, and the recursive call comes before any `edge/2` goal. When this clause is tried first, a query such as `reach(a, d)` immediately calls `reach(a, Z)` with a fresh `Z`. That call enters the same clause again, producing another fresh variable, and so on. The search descends forever without ever reaching the base clause `edge(X, Y)`, so it never reaches an answer. This is not merely a different order: the first clause creates an infinite branch to the left of the base clause.
+
+Swapping `reach` so the `edge` clause comes first changes that. Prolog first tries a direct edge, which grounds the search in a fact, and only on backtracking enters the recursive clause. Each recursive step then consumes an edge before calling `reach` again, so the search can produce answers. The cycle may still make the enumeration endless, but the first answer is reachable. My `route/3` avoids that problem directly by carrying a visited list and refusing to revisit a node. Because that list is passed down and checked with `\+ member`, the route search considers only simple paths and terminates instead of circling the cycle forever.
