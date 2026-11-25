@@ -52,8 +52,10 @@ count_of(X, [H|T], N) :-
 
 % rev(List, Reversed): Reversed holds the elements of List in the other
 % order. Reverse the tail. Then use join/3 to put the head at the end.
-rev(_, _) :-
-    throw(not_implemented(rev/2)).
+rev([], []).
+rev([H|T], Reversed) :-
+    rev(T, ReversedTail),
+    join(ReversedTail, [H], Reversed).
 
 % last_of(List, X): X is the last element of List. The empty list has no
 % last element, so last_of([], X) must fail.
@@ -71,5 +73,12 @@ last_of([_|T], X) :-
 % the cycle a -> b -> c -> a always offers one more edge. Carry the nodes
 % you visited. Refuse to step onto one again. \+ Goal is true when Goal
 % cannot be proved. That is how you say "not yet visited."
-route(_, _, _) :-
-    throw(not_implemented(route/3)).
+route(From, To, Path) :-
+    route(From, To, [From], Path).
+
+route(To, To, Visited, Path) :-
+    rev(Visited, Path).
+route(From, To, Visited, Path) :-
+    edge(From, Next),
+    \+ member(Next, Visited),
+    route(Next, To, [Next|Visited], Path).
