@@ -56,33 +56,33 @@ The base clause comes first, so tom's own children liz and bob come out before t
 
 ## P09
 
-Write one to three sentences here. Name the rule that fixes each field.
+The base clause tries its recursive clause before its base clause, so it descends from tom through bob before returning tom's own children. The first successful descendant is sue (through bob and ann), then jim (through bob and pat); the search eventually yields six descendants total.
 
 ## P10
 
-Write one to three sentences here. Name the rule that fixes each field.
+The base clause first finds `parent(pat, jim)`, giving X=pat. Its recursive clause then finds bob and tom as ancestors through their children; there are three answers total. The TSV's second answer `X=tom` skips bob, so that prediction does not match the clause order and search.
 
 ## P11
 
-Write one to three sentences here. Name the rule that fixes each field.
+`reach` calls itself before consulting `edge`, so it repeatedly enters the same recursive clause without making progress. The graph's cycle cannot be escaped by backtracking into the edge clause within the tracer/enumerator budget, so the search reports no reached answers.
 
 ## P12
 
-Write one to three sentences here. Name the rule that fixes each field.
+`reach_r` consumes an edge before recurring. There are infinitely many walks from a to d because the a-b-c cycle can be traversed any number of times before taking c-d; each walk succeeds, so the first two answers are both `true` and the count is infinite.
 
 ## P13
 
-Write one to three sentences here. Name the rule that fixes each field.
+The three list elements make N=3, with only 1 answer.
 
 ## P14
 
-Write one to three sentences here. Name the rule that fixes each field.
+`join` asks what are the values of X and Y that result in [1,2] when joined. There are three answers: `X = [], Y = [1, 2]` ,`X = [1], Y = [2]` and `X = [1, 2], Y = []`
 
 ## P15
 
-Write one to three sentences here. Name the rule that fixes each field.
+The arithmetic comparison `X > 2` is called before `elem`. Comparing an uninstantiated variable raises an instantiation error, so the query reports error for all three fields.
 
 ## P16
 
-Write one to three sentences here. Name the rule that fixes each field.
+`elem` binds X to list elements in order. The test 1 > 2 fails, so Prolog backtracks. X = 2 also fails. X = 3 passes. After that, elem has nothing left to offer. There is one answer, X = 3.
 
